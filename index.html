@@ -67,8 +67,8 @@ input[type=date]{display:block;min-width:0;text-align:right}
 </div>
 </div>
 <div style="flex:1 1 320px;min-width:0;box-sizing:border-box;padding:10px;border:1px solid #C9A08F;border-radius:999px 999px 24px 24px">
-<div style="width:100%;height:clamp(420px,62vw,640px);border-radius:999px 999px 16px 16px;overflow:hidden;background:#E6D9C5">
-<img src="lotus.jpg" alt="تشيز كيك لوتس بصوص البسكويت المكرمل وفتات البسكويت على حامل زجاجي" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 60%">
+<div style="width:100%;height:clamp(420px,62vw,640px);border-radius:999px 999px 16px 16px;overflow:hidden;background:#2b190f">
+<img src="hero-logo.jpg" alt="شعار MAISON HÉDA — ميزون هيدا" style="display:block;width:100%;height:100%;object-fit:contain;object-position:50% 50%">
 </div>
 </div>
 </section>
@@ -81,7 +81,7 @@ input[type=date]{display:block;min-width:0;text-align:right}
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px">
 <div class="card" style="display:flex;flex-direction:column;background:#FAF6EE;border:1px solid #E3D5C0;border-radius:18px;overflow:hidden">
 <div style="display:flex;flex-direction:column;flex:1;padding:28px 22px;gap:10px">
-<div style="width:100%;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#E6D9C5"><img src="choco-bloom.jpg" alt="Choco Bloom تشيز كيك بالشوكولا وقطعة مقطوعة على صحن ذهبي" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 55%"></div>
+<div style="width:100%;aspect-ratio:1159/1246;border-radius:12px;overflow:hidden;background:#E6D9C5"><img src="choco-bloom.jpg" alt="Choco Bloom تشيز كيك بالشوكولا مزين بالتوت الأحمر والأزرق" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%"></div>
 <h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;line-height:1.3;letter-spacing:0.04em;direction:ltr;text-align:right">Choco Bloom</h3>
 <p style="margin:0;flex:1;font-size:16px;line-height:1.8;color:#6E5648">شوكو بلوم تشيز كيك مخبوز بقوام كريمي مع طبقه من البلو بيري والشوكولا البلجيكية.</p>
 <a class="btn btn-line" href="https://wa.me/218925647179?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20MAISON%20H%C3%89DA%D8%8C%20%D9%86%D8%A8%D9%8A%20%D9%86%D8%B7%D9%84%D8%A8%20Choco%20Bloom." target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-height:46px;box-sizing:border-box;border-radius:999px;border:1px solid #3B2418;color:#3B2418;text-decoration:none;font-size:16px;font-weight:500">اطلبوا الآن</a>
@@ -286,13 +286,13 @@ var p2=function(n){return String(n).padStart(2,'0')};
 $('f-date').setAttribute('min', d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()));
 var clean=function(v){return String(v||'').trim()};
 $('send-btn').addEventListener('click',function(){
-  var v={name:clean($('f-name').value),phone:clean($('f-phone').value),flavor:clean($('f-flavor').value),size:clean($('f-size').value),people:clean($('f-people').value),date:clean($('f-date').value),area:clean($('f-area').value),address:clean($('f-address').value),notes:clean($('f-notes').value)};
+  var v={name:clean($('f-name').value),phone:clean($('f-phone').value),flavor:clean($('f-flavor').value),date:clean($('f-date').value),address:clean($('f-address').value),notes:clean($('f-notes').value)};
   var err=$('form-error');
-  if(!v.name||!v.phone||!v.flavor||!v.size||!v.people||!v.date||!v.area||!v.address){err.style.display='block';return;}
+  if(!v.name||!v.phone||!v.flavor||!v.date||!v.address){err.style.display='block';return;}
   err.style.display='none';
   var dp=v.date.split('-');
   var dateTxt=dp.length===3?dp[2]+'/'+dp[1]+'/'+dp[0]:v.date;
-  var lines=['مرحبا MAISON HÉDA، نبي نرسل طلب جديد:','','الاسم: '+v.name,'رقم الهاتف: '+v.phone,'النوع المطلوب: '+v.flavor,'الحجم: '+v.size,'عدد الأشخاص التقريبي: '+v.people,'تاريخ الاستلام: '+dateTxt,'المنطقة: '+v.area,'العنوان بالتفصيل: '+v.address];
+  var lines=['مرحبا MAISON HÉDA، نبي نرسل طلب جديد:','','الاسم: '+v.name,'رقم الهاتف: '+v.phone,'النوع المطلوب: '+v.flavor,'تاريخ الاستلام: '+dateTxt,'العنوان بالتفصيل: '+v.address];
   if(v.notes){lines.push('ملاحظات: '+v.notes);}
   lines.push('','طريقة الاستلام: توصيل','نرجو تأكيد الطلب وتحديد تكلفة التوصيل حسب منطقتي. وأعلم أن هذا الطلب لا يتأكد إلا بعد تواصلكم معي.');
   var url='https://wa.me/'+NUM+'?text='+encodeURIComponent(lines.join('\n'));
