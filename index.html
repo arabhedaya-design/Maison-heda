@@ -37,23 +37,24 @@ input[type=date]{display:block;min-width:0;text-align:right}
 #splash{position:fixed;inset:0;z-index:9999;background:#2E180E;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 16px;transition:transform .9s cubic-bezier(.7,0,.2,1),opacity .9s}
 #splash.out{transform:translateY(-100%);opacity:0}
 #splash img{width:130px;height:auto;animation:fade 1s ease both}
-#splash .t1{margin-top:28px;font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:.22em;padding-left:.22em;color:#F5EBDD;white-space:nowrap;clip-path:inset(0 100% 0 0);animation:show 1.4s steps(11) 1.2s forwards}
-#splash .line{width:70px;height:1px;background:#C9A18A;margin:16px 0;transform:scaleX(0);animation:grow .8s ease 2.7s forwards}
-#splash .t2{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.3em;padding-left:.3em;color:#D4B5A0;white-space:nowrap;clip-path:inset(0 100% 0 0);animation:show 1.3s steps(22) 3.2s forwards}
-#splash .t3{margin-top:18px;font-family:'Amiri',serif;font-size:24px;color:#F5EBDD;direction:rtl;clip-path:inset(0 0 0 100%);animation:show 1.1s steps(9) 4.6s forwards}
+#splash .c{color:transparent}
+#splash .c.on{color:inherit}
+#splash .t1{margin-top:28px;font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:.22em;padding-left:.22em;color:#F5EBDD;white-space:nowrap}
+#splash .line{width:70px;height:1px;background:#C9A18A;margin:16px 0;transform:scaleX(0);transition:transform .8s ease}
+#splash .line.go{transform:scaleX(1)}
+#splash .t2{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.3em;padding-left:.3em;color:#D4B5A0;white-space:nowrap}
+#splash .t3{margin-top:18px;font-family:'Amiri',serif;font-size:24px;color:#F5EBDD;direction:rtl}
 @keyframes fade{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
-@keyframes show{to{clip-path:inset(0)}}
-@keyframes grow{to{transform:scaleX(1)}}
 body.lock{overflow:hidden}
 </style>
 </head>
 <body>
 <div id="splash">
   <img src="splash-logo.png" alt="MAISON HÉDA">
-  <div class="t1">MAISON HÉDA</div>
+  <div class="t1" data-t="MAISON HÉDA"></div>
   <div class="line"></div>
-  <div class="t2">HANDCRAFTED CHEESECAKE</div>
-  <div class="t3">ميزون هيدا</div>
+  <div class="t2" data-t="HANDCRAFTED CHEESECAKE"></div>
+  <div class="t3" data-t="ميزون هيدا"></div>
 </div>
 
 <div dir="rtl" style="width:100%;box-sizing:border-box;background:#FAF6EE;color:#3B2418;font-family:'Tajawal',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden">
@@ -307,12 +308,44 @@ body.lock{overflow:hidden}
   try{seen=sessionStorage.getItem('splashSeen')}catch(e){}
   if(seen){s.remove();return}
   document.body.classList.add('lock');
-  setTimeout(function(){
+  var fin=false;
+  function done(){
+    if(fin)return;fin=true;
     s.classList.add('out');
     document.body.classList.remove('lock');
     try{sessionStorage.setItem('splashSeen','1')}catch(e){}
     setTimeout(function(){s.remove()},1000);
-  },7500);
+  }
+  function prep(el){
+    var t=el.getAttribute('data-t'),h='';
+    for(var i=0;i<t.length;i++){h+='<span class="c">'+(t.charAt(i)===' '?'&nbsp;':t.charAt(i))+'</span>'}
+    el.innerHTML=h;
+    return el.children;
+  }
+  function type(c,gap,cb){
+    var i=0;
+    (function n(){
+      if(i<c.length){c[i++].className='c on';setTimeout(n,gap)}
+      else if(cb)cb();
+    })();
+  }
+  var c1=prep(s.querySelector('.t1')),
+      c2=prep(s.querySelector('.t2')),
+      c3=prep(s.querySelector('.t3')),
+      ln=s.querySelector('.line');
+  setTimeout(function(){
+    type(c1,80,function(){
+      ln.className='line go';
+      setTimeout(function(){
+        type(c2,35,function(){
+          setTimeout(function(){
+            type(c3,100,function(){setTimeout(done,500)});
+          },150);
+        });
+      },450);
+    });
+  },900);
+  setTimeout(done,14000);
 })();
 </script>
 
