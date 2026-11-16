@@ -33,16 +33,27 @@ input,select,textarea{font-size:17px;-webkit-appearance:none;appearance:none}
 input[type=date]{display:block;min-width:0;text-align:right}
 </style>
 <style>
-#splash{position:fixed;inset:0;z-index:9999;background:#2B170F;display:flex;align-items:center;justify-content:center;transition:transform .9s cubic-bezier(.7,0,.2,1),opacity .9s}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Jost:wght@400&family=Amiri:wght@400&display=swap');
+#splash{position:fixed;inset:0;z-index:9999;background:#2E180E;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 16px;transition:transform .9s cubic-bezier(.7,0,.2,1),opacity .9s}
 #splash.out{transform:translateY(-100%);opacity:0}
-#splash img{width:100%;height:100%;object-fit:contain;animation:fade 1s ease both}
+#splash img{width:130px;height:auto;animation:fade 1s ease both}
+#splash .t1{margin-top:28px;font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:.22em;padding-left:.22em;color:#F5EBDD;white-space:nowrap;clip-path:inset(0 100% 0 0);animation:show 1.4s steps(11) 1.2s forwards}
+#splash .line{width:70px;height:1px;background:#C9A18A;margin:16px 0;transform:scaleX(0);animation:grow .8s ease 2.7s forwards}
+#splash .t2{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.3em;padding-left:.3em;color:#D4B5A0;white-space:nowrap;clip-path:inset(0 100% 0 0);animation:show 1.3s steps(22) 3.2s forwards}
+#splash .t3{margin-top:18px;font-family:'Amiri',serif;font-size:24px;color:#F5EBDD;direction:rtl;clip-path:inset(0 0 0 100%);animation:show 1.1s steps(9) 4.6s forwards}
 @keyframes fade{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@keyframes show{to{clip-path:inset(0)}}
+@keyframes grow{to{transform:scaleX(1)}}
 body.lock{overflow:hidden}
 </style>
 </head>
 <body>
 <div id="splash">
-  <img src="splash.png" alt="MAISON HÉDA">
+  <img src="splash-logo.png" alt="MAISON HÉDA">
+  <div class="t1">MAISON HÉDA</div>
+  <div class="line"></div>
+  <div class="t2">HANDCRAFTED CHEESECAKE</div>
+  <div class="t3">ميزون هيدا</div>
 </div>
 
 <div dir="rtl" style="width:100%;box-sizing:border-box;background:#FAF6EE;color:#3B2418;font-family:'Tajawal',sans-serif;font-size:18px;line-height:1.9;overflow-x:hidden">
@@ -301,7 +312,7 @@ body.lock{overflow:hidden}
     document.body.classList.remove('lock');
     try{sessionStorage.setItem('splashSeen','1')}catch(e){}
     setTimeout(function(){s.remove()},1000);
-  },3000);
+  },7500);
 })();
 </script>
 
