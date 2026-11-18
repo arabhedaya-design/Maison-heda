@@ -43,7 +43,9 @@ input[type=date]{display:block;min-width:0;text-align:right}
 #splash .line{width:70px;height:1px;background:#C9A18A;margin:16px 0;transform:scaleX(0);transition:transform .8s ease}
 #splash .line.go{transform:scaleX(1)}
 #splash .t2{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.3em;padding-left:.3em;color:#D4B5A0;white-space:nowrap}
-#splash .t3{margin-top:18px;font-family:'Amiri',serif;font-size:24px;color:#F5EBDD;direction:rtl}
+#splash .t3{position:relative;display:inline-block;margin-top:18px;font-family:'Amiri',serif;font-size:24px;color:#F5EBDD;direction:rtl;white-space:nowrap}
+#splash .t3::before{content:attr(data-t);visibility:hidden}
+#splash .t3 .ov{position:absolute;right:0;top:0}
 @keyframes fade{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
 body.lock{overflow:hidden}
 </style>
@@ -329,17 +331,27 @@ body.lock{overflow:hidden}
       else if(cb)cb();
     })();
   }
+  function typeText(el,txt,gap,cb){
+    var i=0;
+    (function n(){
+      if(i<txt.length){i++;el.textContent=txt.slice(0,i);setTimeout(n,gap)}
+      else if(cb)cb();
+    })();
+  }
   var c1=prep(s.querySelector('.t1')),
       c2=prep(s.querySelector('.t2')),
-      c3=prep(s.querySelector('.t3')),
+      t3=s.querySelector('.t3'),
+      full3=t3.getAttribute('data-t'),
       ln=s.querySelector('.line');
+  t3.innerHTML='<span class="ov"></span>';
+  var ov=t3.firstChild;
   setTimeout(function(){
     type(c1,80,function(){
       ln.className='line go';
       setTimeout(function(){
         type(c2,35,function(){
           setTimeout(function(){
-            type(c3,100,function(){setTimeout(done,500)});
+            typeText(ov,full3,100,function(){setTimeout(done,500)});
           },150);
         });
       },450);
@@ -348,7 +360,6 @@ body.lock{overflow:hidden}
   setTimeout(done,6000);
 })();
 </script>
-
 <script>
 (function(){
 var NUM='218925647179';
